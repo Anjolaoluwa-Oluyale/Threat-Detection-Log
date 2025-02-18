@@ -26,6 +26,16 @@ When a potential threat is detected, the log file will include entries like:
 [ALERT] 2025-02-18 14:35:20 - Suspicious login attempt detected from IP: 192.168.1.100
 [ALERT] 2025-02-18 14:40:45 - Potential privilege escalation attempt detected in Event ID: 4672
 
+How It Works:
+The script runs in a continuous loop, checking the Security, System, and Application logs for any failed login attempts (Event ID 4625) and privilege escalation events (Event ID 4672).
+If it detects suspicious behavior (failed login attempts above the threshold or privilege escalation), it will send an alert message (you can customize this function to send real alerts like emails).
+After each check, the script waits for 10 minutes (Start-Sleep -Minutes 10) before running the next check.
+
+Customizing the Script:
+Adjust the Event IDs: If you're looking for different kinds of security events, you can change the Event IDs in the Where-Object filter.
+Adjust the Log Names: If you want to analyze additional event logs, you can modify the $logNames array.
+Modify Alerts: You can customize the Send-Alert function to send emails or integrate with a Security Information and Event Management (SIEM) tool if needed.
+
 Contributing
 Feel free to fork this repository and submit pull requests for improvements, bug fixes, or new features!
 
