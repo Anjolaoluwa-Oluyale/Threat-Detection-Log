@@ -27,22 +27,31 @@ When a potential threat is detected, the log file will include entries like:
 [ALERT] 2025-02-18 14:40:45 - Potential privilege escalation attempt detected in Event ID: 4672
 
 To Automate it:
-Using the Startup Folder
-1. Create a Shortcut to Your Script:
-Navigate to the folder where your script is located (e.g., threat-detection.ps1).
-Right-click the script and select Create shortcut.
+1. Open Task Scheduler:
+Press Win + R, type taskschd.msc, and press Enter to open Task Scheduler.
 
-2. Move the Shortcut to the Startup Folder:
-Open the Run dialog by pressing Win + R.
-Type shell:startup and press Enter. This will open the Startup folder.
-Move or copy the shortcut you created into this folder.
-Make Sure the Script Runs with Administrator Privileges: Since the script needs elevated privileges to access Event Logs, you will need to make sure it runs as Administrator.
-Right-click the shortcut you just created in the Startup folder and select Properties.
-Under the Shortcut tab, click the Advanced... button.
-Check the box that says Run as administrator, then click OK.
+2.Create a New Task:
+In Task Scheduler, click Create Task on the right-hand side.
 
-3. Test the Script:
-Restart your system, and the script should run automatically when you log in.
+3. Configure Task:
+Under the General tab:
+Name your task (e.g., "Threat Detection Script").
+Check the box Run with highest privileges to ensure the script has the necessary permissions.
+
+Under the Triggers tab:
+Click New and select At logon to trigger the task when you log in.
+
+Under the Actions tab:
+Click New, then set Action to Start a program.
+Browse and select the powershell.exe executable.
+In the Add arguments field, enter the full path to your script (e.g., C:\path\to\threat-detection.ps1).
+
+4.Save the Task:
+Click OK to save the task.
+
+5.Test the Task:
+Restart your system to verify that the script runs automatically when you log in.
+
 
 How It Works:
 The script runs in a continuous loop, checking the Security, System, and Application logs for any failed login attempts (Event ID 4625) and privilege escalation events (Event ID 4672).
@@ -53,7 +62,6 @@ Customizing the Script:
 Adjust the Event IDs: If you're looking for different kinds of security events, you can change the Event IDs in the Where-Object filter.
 Adjust the Log Names: If you want to analyze additional event logs, you can modify the $logNames array.
 Modify Alerts: You can customize the Send-Alert function to send emails or integrate with a Security Information and Event Management (SIEM) tool if needed.
-
 
 Contributing
 Feel free to fork this repository and submit pull requests for improvements, bug fixes, or new features!
