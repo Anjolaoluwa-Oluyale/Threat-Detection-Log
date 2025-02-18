@@ -1,6 +1,6 @@
 1. Clone the repository
 Clone this repository to your local machine:
-git clone https://github.com/YourUsername/Continuous-Threat-Detection-Windows.git
+git clone https://github.com/Anjolaoluwa-Oluyale/Continuous-Threat-Detection-Windows.git
 
 2. Edit the script (optional)
 Open the threat-detection.ps1 file and modify it to include any custom patterns, keywords, or events you want to monitor.
