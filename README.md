@@ -26,6 +26,35 @@ When a potential threat is detected, the log file will include entries like:
 [ALERT] 2025-02-18 14:35:20 - Suspicious login attempt detected from IP: 192.168.1.100
 [ALERT] 2025-02-18 14:40:45 - Potential privilege escalation attempt detected in Event ID: 4672
 
+To Automate it:
+
+1. Open Task Scheduler:
+Press Win + R, type taskschd.msc, and press Enter to open Task Scheduler.
+
+2. Create a New Task:
+In Task Scheduler, click Create Task on the right-hand side.
+
+3. Configure Task:
+
+Under the General tab:
+Name your task (e.g., "Threat Detection Script").
+Check the box Run with highest privileges to ensure the script has the necessary permissions.
+
+Under the Triggers tab:
+Click New and select At logon to trigger the task when you log in.
+
+Under the Actions tab:
+Click New, then set Action to Start a program.
+Browse and select the powershell.exe executable.
+In the Add arguments field, enter the full path to your script (e.g., C:\path\to\threat-detection.ps1).
+
+4. Save the Task:
+Click OK to save the task.
+
+5. Test the Task:
+Restart your system to verify that the script runs automatically when you log in.
+
+
 How It Works:
 The script runs in a continuous loop, checking the Security, System, and Application logs for any failed login attempts (Event ID 4625) and privilege escalation events (Event ID 4672).
 If it detects suspicious behavior (failed login attempts above the threshold or privilege escalation), it will send an alert message (you can customize this function to send real alerts like emails).
@@ -35,6 +64,7 @@ Customizing the Script:
 Adjust the Event IDs: If you're looking for different kinds of security events, you can change the Event IDs in the Where-Object filter.
 Adjust the Log Names: If you want to analyze additional event logs, you can modify the $logNames array.
 Modify Alerts: You can customize the Send-Alert function to send emails or integrate with a Security Information and Event Management (SIEM) tool if needed.
+
 
 Contributing
 Feel free to fork this repository and submit pull requests for improvements, bug fixes, or new features!
